@@ -18,8 +18,7 @@ int AOC1_1(string filePath)
 
 int AOC1_2(string filePath)
 {
-    string inputFilePath = "../01/1.input.txt";
-    List<string> inputData = File.ReadAllText(inputFilePath).Split("\n").SkipLast(1).ToList();
+    List<string> inputData = File.ReadAllText(filePath).Split("\n").SkipLast(1).ToList();
 
     List<int> arr1 = inputData.Select(x => int.Parse(x.Split(' ', StringSplitOptions.RemoveEmptyEntries)[0])).ToList();
     List<int> arr2 = inputData.Select(x => int.Parse(x.Split(' ', StringSplitOptions.RemoveEmptyEntries)[1])).ToList();
@@ -29,5 +28,8 @@ int AOC1_2(string filePath)
     return result;
 }
 
+string rootDir = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../"));
+Console.WriteLine(rootDir);
+
 // Console.WriteLine(AOC1_1("../01/1.input.txt"));
-Console.WriteLine(AOC1_2("../01/1.input.txt"));
+Console.WriteLine(AOC1_2(rootDir + "../1.input.txt"));
