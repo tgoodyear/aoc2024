@@ -1,0 +1,36 @@
+# Ignore compiled files
+*.dll
+*.exe
+*.so
+*.dylib
+
+# Ignore build directories
+bin/
+obj/
+
+# Ignore user-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# Ignore Python bytecode
+__pycache__/
+*.py[cod]
+
+# Ignore virtual environments
+env/
+venv/
+ENV/
+ENV*/
+venv*/
+.venv/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore macOS specific files
+.DS_Store
+
+# Ignore Visual Studio Code settings
+.vscode/
