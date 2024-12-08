@@ -18,7 +18,6 @@ unsafe = 0
 safe = 0
 
 def isSafe(reports):
-    reports = list(map(int,line.split()))
     ascending = reports == sorted(reports)
     descending = reports == sorted(reports, reverse=True)
     if not ascending and not descending:
@@ -30,80 +29,35 @@ def isSafe(reports):
     else:
         return 0
 
+def remove_one_element(input_list):
+    """
+    Generate a set of lists by removing one element from the input list.
+    
+    Args:
+        input_list (list): The input list to remove elements from
+    
+    Returns:
+        set: A set of lists, where each list is created by removing one element from the input list
+    """
+    print(input_list)
+    return {
+        tuple(input_list[:i] + input_list[i+1:])
+        for i in range(len(input_list))
+    }
 
 for line in lines:
     reports = list(map(int,line.split()))
-    print(reports)
-    direction = 0
-    unsafeElems = 0
-    lineSafe = True
-    pops = 0
-    for i, element in enumerate(reports):
-        popElem = i
-        if unsafeElems > 1:
-            unsafe += 1
-            lineSafe = False
-            break
-        if i == 0:
-            continue
-
-        curr = reports[i]
-        prev = reports[i-1]
-
-        # Set ascending or descending
-        if direction == 0:
-            if curr > prev:
-                direction = 1
-            elif curr < prev:
-                direction = -1
-            else:
-                unsafeElems += 1
-                print("Elems equal: ", curr, prev)
-                if(unsafeElems > 1):
-                    lineSafe = False
-                    print("More than 1 unsafe")
-                    unsafe += 1
-                    break
-                reports.pop(popElem)
-                continue
-        else:
-            if prev > curr and direction == 1:
-                unsafeElems += 1
-                if(unsafeElems > 1):
-                    lineSafe = False
-                    print("More than 1 unsafe")
-                    unsafe += 1
-                    break
-                print("Unsafe:", curr, ">", prev, direction)
-                reports.pop(popElem)
-                continue
-            elif prev < curr and direction == -1:
-                unsafeElems += 1
-                if(unsafeElems > 1):
-                    lineSafe = False
-                    print("More than 1 unsafe")
-                    unsafe += 1
-                    break
-                print("Unsafe:", curr, "<", prev, direction)
-                reports.pop(popElem)
-                continue
-        
-        # Check if the difference is between 1 and 3
-        diff = abs(curr - prev)
-        if not((diff > 0) and (diff < 4)):
-            unsafeElems += 1
-            print("Unsafe: ", curr, " - ", prev, " = ", diff)
-            if(unsafeElems > 1):
-                lineSafe = False
-                print("More than 1 unsafe")
-                unsafe += 1
+    if isSafe(reports):
+        safe += 1
+    else:
+        # Check all permutations of list
+        for report in remove_one_element(reports):
+            if isSafe(list(report)):
+                # print(str(report) + " safe")
+                safe += 1
                 break
-            reports.pop(popElem)
-            continue
-        
-    safe += 1 if lineSafe else 0
-    # if not lineSafe:
-    print(reports, lineSafe,direction)
+        unsafe += 1
+
 
 print("Safe: ", safe)
 print("Unsafe: ", unsafe)
